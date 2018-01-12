@@ -40,7 +40,8 @@ class Pumcp_Payments_RedirectController extends Mage_Core_Controller_Front_Actio
 				$productInfo  		= 	$postdata['productinfo'];
 				$firstname    		= 	$postdata['firstname'];
 				$email        		=	$postdata['email'];
-				$keyString 	  		=  	$pumkey.'|'.$ordid.'|'.$amount.'|'.$productInfo.'|'.$firstname.'|'.$email.'||||||||||';
+				$udf5 				= 	$postdata['udf5'];
+				$keyString 	  		=  	$pumkey.'|'.$ordid.'|'.$amount.'|'.$productInfo.'|'.$firstname.'|'.$email.'|||||' . $udf5. '|||||';
 				$keyArray 	  		= 	explode("|",$keyString);
 				$reverseKeyArray 	= 	array_reverse($keyArray);
 				$reverseKeyString	=	implode("|",$reverseKeyArray);

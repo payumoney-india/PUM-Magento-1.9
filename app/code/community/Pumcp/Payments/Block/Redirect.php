@@ -23,7 +23,7 @@ class Pumcp_Payments_Block_Redirect extends Mage_Core_Block_Abstract
 			$action = 'https://secure.payu.in/_payment.php';
 			
 			if($environment == 'sandbox')
-				$action = 'https://test.payu.in/_payment.php';
+				$action = 'https://sandboxsecure.payu.in/_payment.php';
 			
 			$currency = $order->getOrderCurrencyCode();
         	$billingAddress = $order->getBillingAddress();
@@ -44,7 +44,9 @@ class Pumcp_Payments_Block_Redirect extends Mage_Core_Block_Abstract
 			$furl = $baseurl."pumcp/redirect/payumpayment/";
 			$curl = $baseurl."pumcp/redirect/payumpayment/";
 			
-			$hash=hash('sha512', $pumkey.'|'.$txnid.'|'.$amount.'|'.$productInfo.'|'.$firstname.'|'.$email.'|||||||||||'.$pumsalt); 
+			$udf5="Magento_v_1.9.2.4";
+			
+			$hash=hash('sha512', $pumkey.'|'.$txnid.'|'.$amount.'|'.$productInfo.'|'.$firstname.'|'.$email.'|||||'.$udf5.'||||||'.$pumsalt); 
 			$user_credentials = $pumkey.':'.$email;		
 			$service_provider = 'payu_paisa';
 	
@@ -69,6 +71,7 @@ class Pumcp_Payments_Block_Redirect extends Mage_Core_Block_Abstract
 					    <input type=\"hidden\" name=\"city\" value=\"". $city."\" />
 				        <input type=\"hidden\" name=\"country\" value=\"".$country."\" />
 				        <input type=\"hidden\" name=\"state\" value=\"". $state."\" />
+						<input type=\"hidden\" name=\"udf5\" value=\"". $udf5."\" />
 				        <button style='display:none' id='submit_payum_payment_form' name='submit_payum_payment_form'>Pay Now</button>
 					</form>
 					<script type=\"text/javascript\">document.getElementById(\"payu_form\").submit();</script>
